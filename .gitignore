@@ -1,0 +1,16 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+*.npz
+*.pth
+*.pt
+*.onnx
+*.mp4
+# Datasets
+assets/
+
+# OS junk
+.DS_Store
+Thumbs.db
