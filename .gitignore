@@ -5,7 +5,7 @@ __pycache__/
 .env
 *.npz
 *.pth
-*.pt
+#*.pt
 *.onnx
 *.mp4
 # Datasets
