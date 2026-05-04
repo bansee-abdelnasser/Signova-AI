@@ -1,22 +1,35 @@
-import mediapipe as mp
 import cv2
+import mediapipe as mp
 
-class HandDetector:
-    def __init__(self):
-        self.mp_hands = mp.solutions.hands # type: ignore
-        self.hands = self.mp_hands.Hands(
-            static_image_mode=False,
-            max_num_hands=2
-        )
+mp_hands = mp.solutions.hands
 
-    def detect(self, frame):
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = self.hands.process(rgb)
+hands = mp_hands.Hands(
+    static_image_mode=False,
+    max_num_hands=2
+)
 
-        if results.multi_hand_landmarks:
-            return False   # hand active (signing)
-        return True        # pause / no hand
+HAND_LOWER_THRESHOLD = 0.85
 
 
-# GLOBAL INSTANCE (VERY IMPORTANT)
-hand_detector_instance = HandDetector()
+def extract_hand_status(frame):
+    """
+    EXACT SAME LOGIC AS NOTEBOOK
+
+    Returns:
+        True  -> pause / hands lowered
+        False -> sign active
+    """
+
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    results = hands.process(frame_rgb)
+
+    if results.multi_hand_landmarks:
+        for hand in results.multi_hand_landmarks:
+            for lm in hand.landmark:
+
+                # hand raised -> signing
+                if lm.y < HAND_LOWER_THRESHOLD:
+                    return False
+
+    # all hands lowered
+    return True

@@ -11,4 +11,3 @@ CLASS_LIST = os.path.join(
     BASE_DIR,
     "assets/I3D_modelfiles/wlasl_class_list.txt"
 )
-

@@ -11,6 +11,5 @@ class I3DModel:
         self.model.to(device)
         self.model.eval()
 
-    def predict(self, clip):
-        with torch.no_grad():
-            return self.model(clip)
+    def __call__(self, x):
+        return self.model(x)

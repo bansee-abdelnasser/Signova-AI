@@ -3,6 +3,8 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 from groq import Groq
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 lemmatizer = WordNetLemmatizer()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
