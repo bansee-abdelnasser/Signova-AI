@@ -1,6 +1,6 @@
 import os
 
-JSON_PATH = "assets\\text_to_sign\\wlasl2000_filtered_keypoints\\filtered_one_video_per_gloss.json"
+JSON_PATH = "assets\\text_to_sign\\filtered_one_video_per_gloss.json"
 LANDMARKS_PATH = "assets\\text_to_sign\\wlasl2000_filtered_keypoints\\filtered_landmarks_V3\\filtered_landmarks_V3.npz"
 
 FPS = 25
