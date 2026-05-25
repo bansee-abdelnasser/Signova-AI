@@ -1,15 +1,25 @@
 from fastapi import APIRouter, UploadFile, File
-import shutil
+import tempfile
+import os
 from app.services.sign_to_text_service import run_pipeline
 
 router = APIRouter()
 
-TEMP_PATH = "temp.mp4"
 
 @router.post("/")
 async def sign_to_text(video: UploadFile = File(...)):
 
-    with open(TEMP_PATH, "wb") as f:
-        shutil.copyfileobj(video.file, f)
+    # read file into memory
+    contents = await video.read()
 
-    return run_pipeline(TEMP_PATH)
+    # create a safe temporary file (auto deleted)
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as tmp:
+        tmp.write(contents)
+        temp_path = tmp.name
+
+    try:
+        result = run_pipeline(temp_path)
+        return result
+
+    finally:
+        os.remove(temp_path)

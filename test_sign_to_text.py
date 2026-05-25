@@ -1,6 +1,6 @@
 from app.services.sign_to_text_service import run_pipeline
 
-video_path = "where_trian_arrive.mp4"
+video_path = "0222.mp4"
 
 result = run_pipeline(video_path)
 
